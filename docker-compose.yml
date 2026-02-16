@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: adoptme-mongo
+    environment:
+      MONGO_INITDB_DATABASE: adoptme
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - adoptme-network
+
+  backend:
+    build: .
+    container_name: adoptme-backend
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/adoptme
+      PORT: 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    networks:
+      - adoptme-network
+
+volumes:
+  mongo_data:
+
+networks:
+  adoptme-network:
+    driver: bridge
