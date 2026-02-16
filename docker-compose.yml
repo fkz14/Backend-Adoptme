@@ -15,6 +15,7 @@ services:
 
   backend:
     build: .
+    image: alejo14alm/adoptme-backend:latest
     container_name: adoptme-backend
     environment:
       MONGO_URI: mongodb://mongodb:27017/adoptme
